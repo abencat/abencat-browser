@@ -2,7 +2,7 @@
 
 Open-Source Antidetect-Browser — isolierte Profile, integrierte Automatisierungs-API und MCP-Server, Windows / Linux, mit und ohne Oberfläche. Für immer kostenlos.
 
-🌐 [b.abencat.com](https://b.abencat.com) · **Sprachen:** [English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Français](README.fr.md) · Deutsch
+🌐 [browser.abencat.com](https://browser.abencat.com) · **Sprachen:** [English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Français](README.fr.md) · Deutsch
 
 > **Kernel-Herkunft:** Die Fingerprint-Isolierung stammt von **[CloakBrowser](https://github.com/CloakHQ/CloakBrowser) © CloakHQ** (ein Stealth-Chromium mit Patches auf Quellcode-Ebene). Dieses Repo ist ein **Controller/Launcher** für diesen Kernel, der nicht mitverteilt wird. Lade ihn mit dem Skript unten. Siehe [NOTICE](../NOTICE).
 
@@ -11,6 +11,16 @@ Open-Source Antidetect-Browser — isolierte Profile, integrierte Automatisierun
 - Automatisierungs-API (Debug-Port + CDP-WebSocket; Puppeteer/Playwright/Selenium)
 - MCP-Server (KI steuert Umgebungen) — [AGENT_AUTOMATION.md](../AGENT_AUTOMATION.md)
 - Proxy-Pool + GeoIP / lokale Verschlüsselung (AES-256) / plattformübergreifend·headless / 8 Sprachen
+
+## ⬇️ Download
+
+**Voll (mit Kernel, sofort lauffähig):**
+- 🪟 Windows: [abencat-windows-x64-full.zip](https://browser.abencat.com/downloads/abencat-windows-x64-full.zip) (225MB)
+- 🐧 Linux: [abencat-linux-x64-full.tar.gz](https://browser.abencat.com/downloads/abencat-linux-x64-full.tar.gz) (210MB)
+
+**Nur Controller (lädt Kernel automatisch):** [Win .exe](https://browser.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe) · [Win headless](https://browser.abencat.com/downloads/abencat-headless-windows-x64.exe) · [Linux headless](https://browser.abencat.com/downloads/abencat-headless-linux-x64)
+
+> Mehr in [English](../README.md) / [简体中文](README.zh-CN.md)
 
 ## Schnellstart
 ```bash

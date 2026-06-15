@@ -60,7 +60,7 @@ fn chrome_exe_name() -> &'static str {
 }
 
 /// Candidate download URLs, tried in order. Honors `CLOAKBROWSER_DOWNLOAD_URL`
-/// (full archive URL, or a base ending in `/`), then the b.abencat.com mirror,
+/// (full archive URL, or a base ending in `/`), then the browser.abencat.com mirror,
 /// then the official CloakBrowser GitHub release.
 pub fn download_urls() -> Vec<String> {
     let mut urls = Vec::new();
@@ -74,7 +74,7 @@ pub fn download_urls() -> Vec<String> {
             });
         }
     }
-    urls.push(format!("https://b.abencat.com/downloads/{}", asset_name()));
+    urls.push(format!("https://browser.abencat.com/downloads/{}", asset_name()));
     urls.push(format!(
         "https://github.com/CloakHQ/CloakBrowser/releases/download/{VERSION}/{}",
         asset_name()

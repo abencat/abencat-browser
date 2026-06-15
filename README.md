@@ -5,7 +5,7 @@
 **Open-source anti-detect fingerprint browser** — multi-profile isolation, a built-in
 automation HTTP API + MCP server, Windows / Linux, headed & headless. Free forever.
 
-🌐 [b.abencat.com](https://b.abencat.com) ·
+🌐 [browser.abencat.com](https://browser.abencat.com) ·
 **Languages:** English · [简体中文](docs/README.zh-CN.md) · [日本語](docs/README.ja.md) ·
 [한국어](docs/README.ko.md) · [Русский](docs/README.ru.md) · [Español](docs/README.es.md) ·
 [Français](docs/README.fr.md) · [Deutsch](docs/README.de.md)
@@ -33,24 +33,24 @@ automation HTTP API + MCP server, Windows / Linux, headed & headless. Free forev
 
 ## 📦 Download
 
-All downloads are hosted on **[b.abencat.com](https://b.abencat.com)** (the GitHub
+All downloads are hosted on **[browser.abencat.com](https://browser.abencat.com)** (the GitHub
 Release carries source archives only).
 
 **Full bundle — includes the browser kernel, ready to run (no extra download):**
 
 | Platform | Download |
 |---|---|
-| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://b.abencat.com/downloads/abencat-windows-x64-full.zip) (225 MB) — unzip & run `Abencat Browser.exe` |
-| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://b.abencat.com/downloads/abencat-linux-x64-full.tar.gz) (210 MB) — extract & run `./cloak-headless` |
+| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://browser.abencat.com/downloads/abencat-windows-x64-full.zip) (225 MB) — unzip & run `Abencat Browser.exe` |
+| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://browser.abencat.com/downloads/abencat-linux-x64-full.tar.gz) (210 MB) — extract & run `./cloak-headless` |
 
 **Controller only — tiny, auto-downloads the kernel on first run:**
 
 | Platform | Headed (GUI) | Headless (server) |
 |---|---|---|
-| Windows | [installer](https://b.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe) (5 MB) | [cloak-headless.exe](https://b.abencat.com/downloads/abencat-headless-windows-x64.exe) |
-| Linux x86_64 | desktop build (needs webkit2gtk) / `xvfb-run` | [cloak-headless](https://b.abencat.com/downloads/abencat-headless-linux-x64) |
+| Windows | [installer](https://browser.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe) (5 MB) | [cloak-headless.exe](https://browser.abencat.com/downloads/abencat-headless-windows-x64.exe) |
+| Linux x86_64 | desktop build (needs webkit2gtk) / `xvfb-run` | [cloak-headless](https://browser.abencat.com/downloads/abencat-headless-linux-x64) |
 
-> Fingerprint kernel (standalone): [Windows zip](https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
+> Fingerprint kernel (standalone): [Windows zip](https://browser.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://browser.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
 
 ## 🚀 Quick start
 
@@ -95,7 +95,7 @@ and friends — see [LINUX_HEADLESS.md](LINUX_HEADLESS.md).
 src-tauri/src/   Rust backend (models, store, crypto, proxy, launch, api, commands, …)
 src/             React/TS frontend (App.tsx, i18n.ts, components/)
 mcp/             MCP server (cloak-mcp.mjs)
-website/         landing page (b.abencat.com, 8 languages)
+website/         landing page (browser.abencat.com, 8 languages)
 docs/            multi-language README + guides
 scripts/         download-browser.{sh,ps1}
 ```

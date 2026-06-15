@@ -5,7 +5,7 @@
 **开源防关联指纹浏览器** —— 多环境隔离、内置自动化 HTTP API 与 MCP 服务、
 Windows / Linux、有头与无头。永久免费。
 
-🌐 [b.abencat.com](https://b.abencat.com) ·
+🌐 [browser.abencat.com](https://browser.abencat.com) ·
 **语言：** [English](../README.md) · 简体中文 · [日本語](README.ja.md) ·
 [한국어](README.ko.md) · [Русский](README.ru.md) · [Español](README.es.md) ·
 [Français](README.fr.md) · [Deutsch](README.de.md)
@@ -31,23 +31,23 @@ Windows / Linux、有头与无头。永久免费。
 
 ## 📦 下载
 
-全部下载托管在 **[b.abencat.com](https://b.abencat.com)**(GitHub Release 仅含源码归档)。
+全部下载托管在 **[browser.abencat.com](https://browser.abencat.com)**(GitHub Release 仅含源码归档)。
 
 **完整版 — 含浏览器内核,解压即用(无需再下载):**
 
 | 平台 | 下载 |
 |---|---|
-| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://b.abencat.com/downloads/abencat-windows-x64-full.zip)(225MB)— 解压双击 `Abencat Browser.exe` |
-| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://b.abencat.com/downloads/abencat-linux-x64-full.tar.gz)(210MB)— 解压运行 `./cloak-headless` |
+| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://browser.abencat.com/downloads/abencat-windows-x64-full.zip)(225MB)— 解压双击 `Abencat Browser.exe` |
+| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://browser.abencat.com/downloads/abencat-linux-x64-full.tar.gz)(210MB)— 解压运行 `./cloak-headless` |
 
 **控制器版 — 体积小,首次运行自动下载内核:**
 
 | 平台 | 有头(GUI) | 无头(服务器) |
 |---|---|---|
-| Windows | [安装包](https://b.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe)(5MB) | [cloak-headless.exe](https://b.abencat.com/downloads/abencat-headless-windows-x64.exe) |
-| Linux x86_64 | 桌面版(需 webkit2gtk)/ `xvfb-run` | [cloak-headless](https://b.abencat.com/downloads/abencat-headless-linux-x64) |
+| Windows | [安装包](https://browser.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe)(5MB) | [cloak-headless.exe](https://browser.abencat.com/downloads/abencat-headless-windows-x64.exe) |
+| Linux x86_64 | 桌面版(需 webkit2gtk)/ `xvfb-run` | [cloak-headless](https://browser.abencat.com/downloads/abencat-headless-linux-x64) |
 
-> 仅指纹内核:[Windows zip](https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
+> 仅指纹内核:[Windows zip](https://browser.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://browser.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
 
 ## 🚀 快速开始
 
