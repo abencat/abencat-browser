@@ -810,6 +810,26 @@ pub fn remove_master_password() -> CommandResult<()> {
     save_store(&data_root, &store)
 }
 
+/// Download + install the CloakBrowser fingerprint kernel (blocks ~1 min for
+/// ~200 MB). Updates settings.browser_path and returns the chrome path.
+#[tauri::command]
+pub async fn download_browser(force: Option<bool>) -> CommandResult<String> {
+    let force = force.unwrap_or(false);
+    tauri::async_runtime::spawn_blocking(move || crate::browser::ensure_browser(force))
+        .await
+        .map_err(|err| err.to_string())?
+}
+
+/// Whether the fingerprint kernel is already installed, plus its path/URL.
+#[tauri::command]
+pub fn browser_status() -> serde_json::Value {
+    serde_json::json!({
+        "installed": crate::browser::installed_chrome().is_some(),
+        "path": crate::browser::installed_chrome().unwrap_or_default(),
+        "downloadUrl": crate::browser::download_url(),
+    })
+}
+
 /// Return the current automation-API base URL, token and per-profile endpoints.
 #[tauri::command]
 pub fn get_automation_info(state: State<'_, Arc<RuntimeState>>) -> serde_json::Value {

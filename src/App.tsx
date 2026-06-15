@@ -45,6 +45,8 @@ export default function App() {
   const [proxyDraft, setProxyDraft] = useState({ protocol: "SOCKS5", host: "", port: "", username: "", password: "" });
   const [proxyBulk, setProxyBulk] = useState("");
   const [proxyBusyId, setProxyBusyId] = useState("");
+  const [browserInstalled, setBrowserInstalled] = useState<boolean | null>(null);
+  const [downloadingBrowser, setDownloadingBrowser] = useState(false);
   const tableCardRef = useRef<HTMLElement | null>(null);
   const [columnWidths, setColumnWidths] = useState<Record<TableColumnKey, number>>(tableColumnDefaults);
   const [tableViewportWidth, setTableViewportWidth] = useState(0);
@@ -332,8 +334,34 @@ export default function App() {
     setModal(null);
   };
 
+  const loadBrowserStatus = async () => {
+    if (!isTauriRuntime()) { setBrowserInstalled(true); return; }
+    try {
+      const status = await invoke<{ installed: boolean }>("browser_status");
+      setBrowserInstalled(status.installed);
+    } catch { /* ignore */ }
+  };
+
+  const downloadBrowser = async () => {
+    if (!isTauriRuntime() && previewOnly()) return;
+    setDownloadingBrowser(true);
+    notify(t("settings.downloading"));
+    try {
+      const path = await invoke<string>("download_browser", { force: false });
+      setBrowserInstalled(true);
+      setSettingsDraft((current) => ({ ...current, browserPath: path }));
+      await refresh();
+      notify(t("msg.kernelReady"));
+    } catch (err) {
+      fail(err);
+    } finally {
+      setDownloadingBrowser(false);
+    }
+  };
+
   const openSettings = () => {
     setSettingsDraft(state.settings);
+    void loadBrowserStatus();
     setModal("settings");
   };
 
@@ -1147,6 +1175,17 @@ export default function App() {
             </div>
           </label>
           <label>{t("settings.dataDir")}<input className="input" value={settingsDraft.dataRoot} onChange={(event) => setSettingsDraft({ ...settingsDraft, dataRoot: event.target.value })} /></label>
+          <div className="kernel-row">
+            <div>
+              <div className="kernel-label">{t("settings.kernel")}</div>
+              <div className={`kernel-status ${browserInstalled ? "ok" : "missing"}`}>
+                {browserInstalled === null ? "…" : browserInstalled ? t("settings.kernelInstalled") : t("settings.kernelMissing")}
+              </div>
+            </div>
+            <button className="btn" disabled={downloadingBrowser} onClick={() => void downloadBrowser()}>
+              {downloadingBrowser ? t("settings.downloading") : t("settings.downloadKernel")}
+            </button>
+          </div>
           <div className="dialog-actions">
             <button className="btn" onClick={() => setModal(null)}>{t("common.cancel")}</button>
             <button className="btn primary" onClick={() => void saveSettings()}>{t("common.save")}</button>

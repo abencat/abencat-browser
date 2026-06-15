@@ -10,6 +10,7 @@
 //! so it builds on a headless Ubuntu server without Tauri/webkit.
 
 mod api;
+mod browser;
 #[cfg(feature = "gui")]
 mod commands;
 mod crypto;
@@ -77,7 +78,9 @@ pub fn run() {
             commands::get_security_status,
             commands::unlock,
             commands::set_master_password,
-            commands::remove_master_password
+            commands::remove_master_password,
+            commands::download_browser,
+            commands::browser_status
         ])
         .run(tauri::generate_context!())
         .expect("error while running Abencat Browser");
@@ -90,6 +93,14 @@ pub fn headless_main() {
         headless: true,
         ..Default::default()
     });
+    // Auto-download the fingerprint kernel if it isn't present (MCP/headless).
+    if browser::installed_chrome().is_none() {
+        println!("Fingerprint kernel not found — downloading CloakBrowser kernel…");
+        match browser::ensure_browser(false) {
+            Ok(path) => println!("  kernel installed: {path}"),
+            Err(err) => eprintln!("  kernel download failed: {err} (set CLOAKBROWSER_BINARY_PATH)"),
+        }
+    }
     match api::start(runtime.clone()) {
         Some(port) => {
             let token = runtime.api_token.lock().unwrap().clone();

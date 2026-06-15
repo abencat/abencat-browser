@@ -1751,3 +1751,20 @@ tbody tr {
 .modal {
   backdrop-filter: blur(2px);
 }
+
+/* Settings: fingerprint kernel download row */
+.kernel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--line);
+}
+.kernel-label { font-size: 13px; font-weight: 600; }
+.kernel-status { font-size: 12px; margin-top: 2px; }
+.kernel-status.ok { color: var(--green); }
+.kernel-status.missing { color: var(--amber); }

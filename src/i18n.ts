@@ -170,6 +170,12 @@ const dict: Record<string, Entry> = {
   "settings.browserProgram": { zh: "浏览器程序", en: "Browser executable" },
   "settings.choose": { zh: "选择", en: "Browse" },
   "settings.dataDir": { zh: "数据目录", en: "Data directory" },
+  "settings.kernel": { zh: "指纹内核 (CloakBrowser)", en: "Fingerprint kernel (CloakBrowser)" },
+  "settings.kernelInstalled": { zh: "✓ 已安装", en: "✓ Installed" },
+  "settings.kernelMissing": { zh: "未安装", en: "Not installed" },
+  "settings.downloadKernel": { zh: "下载浏览器内核", en: "Download kernel" },
+  "settings.downloading": { zh: "下载中…(约 200MB)", en: "Downloading… (~200MB)" },
+  "msg.kernelReady": { zh: "浏览器内核已就绪", en: "Browser kernel ready" },
   // Batch create / move
   "batchCreate.title": { zh: "批量创建浏览器", en: "Batch Create" },
   "batchCreate.count": { zh: "创建数量", en: "Count" },

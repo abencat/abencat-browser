@@ -187,6 +187,7 @@ puppeteer.connect({ browserWSEndpoint: ws })</pre>
         <div class="dl-list">
           <a class="btn primary" href="#" data-dl="win-setup">⬇ Installer (.exe)</a>
           <a class="btn" href="#" data-dl="win-headless">⬇ cloak-headless.exe</a>
+          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip">⬇ 指纹内核 Kernel (536MB)</a>
         </div>
         <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
       </div>
@@ -198,7 +199,7 @@ puppeteer.connect({ browserWSEndpoint: ws })</pre>
         <p style="color:var(--muted);font-size:14px" data-i18n="dl_linux_d"></p>
         <div class="dl-list">
           <a class="btn primary" href="#" data-dl="linux-headless">⬇ cloak-headless (x86_64)</a>
-          <a class="btn" href="https://github.com/CloakHQ/CloakBrowser/releases" target="_blank">⬇ CloakBrowser kernel</a>
+          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz">⬇ 指纹内核 Kernel (207MB)</a>
         </div>
         <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
       </div>
@@ -215,6 +216,7 @@ puppeteer.connect({ browserWSEndpoint: ws })</pre>
         <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
       </div>
     </div>
+    <p class="sec-sub" style="margin-top:24px" data-i18n="dl_kernel_note"></p>
   </div>
 </section>
 
@@ -256,6 +258,7 @@ const I18N = {
     dl_linux_t:"Linux",dl_linux_d:"无头服务二进制（x86_64），另需 CloakBrowser 内核。",
     dl_mcp_t:"MCP + 文档",dl_mcp_d:"MCP 服务器 + 给 AI 的自动化对接指南。",
     tag_gui:"有头",tag_headless:"无头",tag_mcp:"AI",
+    dl_kernel_note:"提示：软件/无头服务首次运行会自动下载指纹内核(优先从 b.abencat.com 镜像)。也可下载上方「指纹内核」离线安装。控制器为开源,内核 © CloakHQ。",
     footer_note:"开源指纹浏览器控制器 · 基于 CloakBrowser 内核",
   },
   en:{name:"English",
@@ -284,6 +287,7 @@ const I18N = {
     dl_linux_t:"Linux",dl_linux_d:"Headless binary (x86_64). CloakBrowser kernel required.",
     dl_mcp_t:"MCP + Docs",dl_mcp_d:"MCP server + the AI automation guide.",
     tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"AI",
+    dl_kernel_note:"Tip: the app/headless server auto-downloads the fingerprint kernel on first run (mirror: b.abencat.com). Or grab the “Kernel” above for offline install. Controller is open-source; kernel © CloakHQ.",
     footer_note:"Open-source fingerprint browser controller · powered by CloakBrowser",
   },
   ja:{name:"日本語",
