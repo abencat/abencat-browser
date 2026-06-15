@@ -73,6 +73,8 @@ export CLOAKBROWSER_BINARY_PATH=/opt/cloakbrowser/chrome   # or use the script's
 #   → http://127.0.0.1:50327  + a token (printed once)
 ```
 
+📖 **Step-by-step tutorial:** [Let AI drive an anti-detect browser (MCP)](docs/tutorial-ai-automation.md) · [中文教程](docs/tutorial-ai-automation.zh-CN.md)
+
 Drive it over HTTP or MCP — full guide in **[AGENT_AUTOMATION.md](AGENT_AUTOMATION.md)**:
 
 ```bash
