@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阿笨猫指纹浏览器 Abencat Browser — 开源指纹浏览器</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#0f1630; --card:#141c38; --line:#26304f;
+    --text:#e8ecf7; --muted:#9aa6c4; --brand:#6d8bff; --brand2:#8b5cf6;
+    --ok:#34d399; --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Inter","PingFang SC","Microsoft YaHei UI",system-ui,Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  /* header */
+  header{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+    background:rgba(11,16,32,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:20px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+  .logo .dot{width:28px;height:28px;border-radius:8px;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-weight:900}
+  .nav .links{display:flex;gap:22px;margin-left:18px}
+  .nav .links a{color:var(--muted);font-size:14px}
+  .nav .links a:hover{color:var(--text)}
+  .nav .spacer{flex:1}
+  .lang-select{background:var(--card);color:var(--text);border:1px solid var(--line);
+    border-radius:10px;padding:7px 10px;font-size:13px;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+    background:var(--card);color:var(--text);padding:10px 16px;border-radius:12px;
+    font-weight:600;font-size:14px;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--brand)}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));border:none;color:#fff}
+  .btn.primary:hover{filter:brightness(1.08)}
+  /* hero */
+  .hero{position:relative;text-align:center;padding:90px 0 70px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-40% 0 auto;height:600px;
+    background:radial-gradient(60% 50% at 50% 0,rgba(109,139,255,.25),transparent 70%);pointer-events:none}
+  .badge{display:inline-block;border:1px solid var(--line);background:var(--card);
+    color:var(--brand);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;margin-bottom:22px}
+  .hero h1{font-size:clamp(32px,5vw,56px);line-height:1.1;margin:0 0 18px;
+    background:linear-gradient(180deg,#fff,#b9c4e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{max-width:680px;margin:0 auto 30px;color:var(--muted);font-size:18px}
+  .hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .stats{display:flex;gap:36px;justify-content:center;margin-top:46px;flex-wrap:wrap}
+  .stat b{display:block;font-size:26px}
+  .stat span{color:var(--muted);font-size:13px}
+  /* sections */
+  section{padding:64px 0}
+  .sec-title{text-align:center;font-size:30px;margin:0 0 10px}
+  .sec-sub{text-align:center;color:var(--muted);margin:0 auto 40px;max-width:620px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+    background:linear-gradient(135deg,rgba(109,139,255,.2),rgba(139,92,246,.2));margin-bottom:14px}
+  .card h3{margin:0 0 8px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  /* headless */
+  .hl{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .hl-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .hl ul{list-style:none;padding:0;margin:18px 0 0}
+  .hl li{padding:8px 0 8px 28px;position:relative;color:var(--muted)}
+  .hl li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+  pre{background:#0a0f1f;border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#cdd6f4;line-height:1.6}
+  /* download */
+  .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .dl-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative}
+  .dl-card .os{font-size:30px}
+  .dl-card h3{margin:10px 0 4px}
+  .dl-card .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;
+    background:rgba(109,139,255,.18);color:var(--brand);margin:0 6px 10px 0}
+  .dl-card .tag.hl{background:rgba(52,211,153,.16);color:var(--ok)}
+  .dl-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .locked .dl-list{filter:blur(5px);pointer-events:none;user-select:none}
+  .lock-overlay{position:absolute;inset:auto 24px 24px;display:none;
+    flex-direction:column;gap:8px;align-items:center;text-align:center}
+  .locked .lock-overlay{display:flex}
+  .unlock-box{max-width:560px;margin:0 auto 30px;text-align:center;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .unlock-box.hide{display:none}
+  .unlock-actions{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:13px}
+  @media(max-width:860px){.grid,.dl-grid{grid-template-columns:1fr}.hl-grid{grid-template-columns:1fr}.nav .links{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="dot">A</span> Abencat Browser</div>
+    <div class="links">
+      <a href="#features" data-i18n="nav_features"></a>
+      <a href="#headless" data-i18n="nav_headless"></a>
+      <a href="#download" data-i18n="nav_download"></a>
+      <a href="https://github.com/CloakHQ/CloakBrowser" target="_blank" data-i18n="nav_github"></a>
+    </div>
+    <div class="spacer"></div>
+    <select class="lang-select" id="lang" aria-label="language"></select>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="badge" data-i18n="hero_badge"></span>
+    <h1 data-i18n="hero_title"></h1>
+    <p data-i18n="hero_sub"></p>
+    <div class="cta">
+      <a class="btn primary" href="#download" data-i18n="hero_download"></a>
+      <a class="btn" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" data-i18n="hero_github"></a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>2×2</b><span data-i18n="stat_forms"></span></div>
+      <div class="stat"><b>8+</b><span data-i18n="stat_langs"></span></div>
+      <div class="stat"><b>MCP</b><span data-i18n="stat_mcp"></span></div>
+      <div class="stat"><b>100%</b><span data-i18n="stat_free"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <h2 class="sec-title" data-i18n="feat_title"></h2>
+    <p class="sec-sub" data-i18n="feat_sub"></p>
+    <div class="grid">
+      <div class="card"><div class="ic">🛡️</div><h3 data-i18n="f1_t"></h3><p data-i18n="f1_d"></p></div>
+      <div class="card"><div class="ic">⚡</div><h3 data-i18n="f2_t"></h3><p data-i18n="f2_d"></p></div>
+      <div class="card"><div class="ic">🌐</div><h3 data-i18n="f3_t"></h3><p data-i18n="f3_d"></p></div>
+      <div class="card"><div class="ic">🤖</div><h3 data-i18n="f4_t"></h3><p data-i18n="f4_d"></p></div>
+      <div class="card"><div class="ic">🔒</div><h3 data-i18n="f5_t"></h3><p data-i18n="f5_d"></p></div>
+      <div class="card"><div class="ic">💻</div><h3 data-i18n="f6_t"></h3><p data-i18n="f6_d"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="headless" class="hl">
+  <div class="wrap hl-grid">
+    <div>
+      <h2 class="sec-title" style="text-align:left" data-i18n="hl_title"></h2>
+      <p style="color:var(--muted)" data-i18n="hl_sub"></p>
+      <ul>
+        <li data-i18n="hl_p1"></li>
+        <li data-i18n="hl_p2"></li>
+        <li data-i18n="hl_p3"></li>
+      </ul>
+    </div>
+    <div>
+<pre>$ ./cloak-headless
+  endpoint : http://127.0.0.1:50327
+  token    : ••••••••
+
+# start a fingerprint browser, get the CDP endpoint
+GET /api/v1/browser/start?id=&lt;id&gt;&amp;headless=1&amp;token=&lt;token&gt;
+→ { "ws": "ws://127.0.0.1:42555/devtools/browser/...",
+    "debuggerAddress": "127.0.0.1:42555" }
+
+# then drive it with Puppeteer / Playwright / Selenium
+puppeteer.connect({ browserWSEndpoint: ws })</pre>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <h2 class="sec-title" data-i18n="dl_title"></h2>
+    <p class="sec-sub" data-i18n="dl_sub"></p>
+
+    <div class="unlock-box" id="unlockBox">
+      <div data-i18n="dl_unlock_hint"></div>
+      <div class="unlock-actions">
+        <button class="btn primary" id="shareBtn" data-i18n="dl_share"></button>
+        <a class="btn" id="joinBtn" href="https://t.me/your_group" target="_blank" data-i18n="dl_join"></a>
+      </div>
+    </div>
+
+    <div class="dl-grid" id="dlGrid">
+      <div class="dl-card locked">
+        <div class="os">🪟</div>
+        <h3 data-i18n="dl_win_t"></h3>
+        <div><span class="tag" data-i18n="tag_gui"></span><span class="tag hl" data-i18n="tag_headless"></span></div>
+        <p style="color:var(--muted);font-size:14px" data-i18n="dl_win_d"></p>
+        <div class="dl-list">
+          <a class="btn primary" href="#" data-dl="win-setup">⬇ Installer (.exe)</a>
+          <a class="btn" href="#" data-dl="win-headless">⬇ cloak-headless.exe</a>
+        </div>
+        <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
+      </div>
+
+      <div class="dl-card locked">
+        <div class="os">🐧</div>
+        <h3 data-i18n="dl_linux_t"></h3>
+        <div><span class="tag hl" data-i18n="tag_headless"></span></div>
+        <p style="color:var(--muted);font-size:14px" data-i18n="dl_linux_d"></p>
+        <div class="dl-list">
+          <a class="btn primary" href="#" data-dl="linux-headless">⬇ cloak-headless (x86_64)</a>
+          <a class="btn" href="https://github.com/CloakHQ/CloakBrowser/releases" target="_blank">⬇ CloakBrowser kernel</a>
+        </div>
+        <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
+      </div>
+
+      <div class="dl-card locked">
+        <div class="os">🤖</div>
+        <h3 data-i18n="dl_mcp_t"></h3>
+        <div><span class="tag" data-i18n="tag_mcp"></span></div>
+        <p style="color:var(--muted);font-size:14px" data-i18n="dl_mcp_d"></p>
+        <div class="dl-list">
+          <a class="btn primary" href="#" data-dl="mcp">⬇ cloak-mcp (Node)</a>
+          <a class="btn" href="#" data-dl="guide">📖 AGENT_AUTOMATION.md</a>
+        </div>
+        <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p data-i18n="footer_note"></p>
+    <p>© 2026 Abencat Browser 阿笨猫指纹浏览器 · MIT License</p>
+    <p style="opacity:.8">指纹内核基于 / Fingerprint kernel powered by
+      <a href="https://github.com/CloakHQ/CloakBrowser" target="_blank">CloakBrowser</a> © CloakHQ</p>
+  </div>
+</footer>
+
+<script>
+/* ============ i18n ============ */
+const I18N = {
+  zh:{name:"中文",
+    nav_features:"功能",nav_headless:"无头服务",nav_download:"下载",nav_github:"GitHub",
+    hero_badge:"开源 · 永久免费",
+    hero_title:"开源指纹浏览器，过反检测",
+    hero_sub:"源码级指纹补丁，多环境隔离，内置自动化 API 与 MCP。支持 Windows / Linux，有头与无头。",
+    hero_download:"立即下载",hero_github:"查看源码",
+    stat_forms:"平台×形态",stat_langs:"界面语言",stat_mcp:"AI 直连",stat_free:"免费开源",
+    feat_title:"核心能力",feat_sub:"为账号矩阵、数据采集、自动化运营而生。",
+    f1_t:"指纹隔离",f1_d:"基于 CloakBrowser 源码级补丁，Canvas/WebGL/音频/字体/WebRTC 全覆盖，过 bot 检测。",
+    f2_t:"自动化 API",f2_d:"启动即分配调试端口，返回 CDP WebSocket，秒接 Puppeteer/Playwright/Selenium。",
+    f3_t:"代理池 + GeoIP",f3_d:"批量导入、连通性检测、按代理自动同步语言/时区/出口 IP。",
+    f4_t:"MCP 直连",f4_d:"内置 MCP 服务器，AI 助手可直接创建/启动/控制指纹环境。",
+    f5_t:"本地加密",f5_d:"代理密码、Cookie 等敏感数据 AES-256 落盘加密，可选主密码解锁。",
+    f6_t:"跨平台",f6_d:"Windows 桌面 + Linux 服务器，有头/无头自由切换。",
+    hl_title:"无头服务，为服务器而生",
+    hl_sub:"在没有显示器的 Ubuntu 服务器上跑指纹浏览器，纯 HTTP/MCP 驱动。",
+    hl_p1:"不依赖图形界面，单文件二进制即可运行",
+    hl_p2:"本地 API 仅监听回环，token 鉴权",
+    hl_p3:"有头模式可经 Xvfb 在服务器上运行",
+    dl_title:"下载",dl_sub:"永久免费。分享给好友或加入交流群即可解锁下载。",
+    dl_unlock_hint:"🔒 分享或加群即可解锁全部下载（永久免费）",
+    dl_share:"分享解锁",dl_join:"加入交流群",dl_locked:"分享或加群解锁",
+    dl_win_t:"Windows",dl_win_d:"桌面有头版（安装包）+ 无头服务 exe。",
+    dl_linux_t:"Linux",dl_linux_d:"无头服务二进制（x86_64），另需 CloakBrowser 内核。",
+    dl_mcp_t:"MCP + 文档",dl_mcp_d:"MCP 服务器 + 给 AI 的自动化对接指南。",
+    tag_gui:"有头",tag_headless:"无头",tag_mcp:"AI",
+    footer_note:"开源指纹浏览器控制器 · 基于 CloakBrowser 内核",
+  },
+  en:{name:"English",
+    nav_features:"Features",nav_headless:"Headless",nav_download:"Download",nav_github:"GitHub",
+    hero_badge:"Open Source · Free Forever",
+    hero_title:"Open-Source Fingerprint Browser",
+    hero_sub:"Source-level fingerprint patches, isolated profiles, built-in automation API and MCP. Windows / Linux, headed & headless.",
+    hero_download:"Download",hero_github:"View Source",
+    stat_forms:"platform×form",stat_langs:"UI languages",stat_mcp:"AI native",stat_free:"free & open",
+    feat_title:"Core Features",feat_sub:"Built for account matrices, scraping and automation.",
+    f1_t:"Fingerprint Isolation",f1_d:"CloakBrowser source-level patches across Canvas/WebGL/Audio/Fonts/WebRTC — passes bot detection.",
+    f2_t:"Automation API",f2_d:"Auto-allocated debug port returns a CDP WebSocket — connect Puppeteer/Playwright/Selenium instantly.",
+    f3_t:"Proxy Pool + GeoIP",f3_d:"Bulk import, health checks, auto-sync language/timezone/exit IP from the proxy.",
+    f4_t:"MCP Native",f4_d:"Built-in MCP server lets AI assistants create/start/control fingerprint environments directly.",
+    f5_t:"Local Encryption",f5_d:"Proxy passwords & cookies encrypted at rest with AES-256, optional master-password unlock.",
+    f6_t:"Cross-Platform",f6_d:"Windows desktop + Linux server, switch headed/headless per launch.",
+    hl_title:"Headless, built for servers",
+    hl_sub:"Run the fingerprint browser on a display-less Ubuntu server, driven purely over HTTP/MCP.",
+    hl_p1:"No GUI required — single self-contained binary",
+    hl_p2:"Local API binds loopback only, token-protected",
+    hl_p3:"Headed mode available on servers via Xvfb",
+    dl_title:"Download",dl_sub:"Free forever. Share with a friend or join the group to unlock downloads.",
+    dl_unlock_hint:"🔒 Share or join the group to unlock all downloads (free forever)",
+    dl_share:"Share to unlock",dl_join:"Join the group",dl_locked:"share or join to unlock",
+    dl_win_t:"Windows",dl_win_d:"Desktop (installer) + headless server exe.",
+    dl_linux_t:"Linux",dl_linux_d:"Headless binary (x86_64). CloakBrowser kernel required.",
+    dl_mcp_t:"MCP + Docs",dl_mcp_d:"MCP server + the AI automation guide.",
+    tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"AI",
+    footer_note:"Open-source fingerprint browser controller · powered by CloakBrowser",
+  },
+  ja:{name:"日本語",
+    nav_features:"機能",nav_headless:"ヘッドレス",nav_download:"ダウンロード",nav_github:"GitHub",
+    hero_badge:"オープンソース · 永久無料",
+    hero_title:"オープンソース指紋ブラウザ",
+    hero_sub:"ソースレベルの指紋パッチ、環境分離、自動化 API と MCP を内蔵。Windows / Linux、ヘッド有/無対応。",
+    hero_download:"ダウンロード",hero_github:"ソースを見る",
+    stat_forms:"形態",stat_langs:"UI言語",stat_mcp:"AI対応",stat_free:"無料",
+    feat_title:"主な機能",feat_sub:"アカウント運用・収集・自動化のために。",
+    f1_t:"指紋分離",f1_d:"Canvas/WebGL/音声/フォント/WebRTC を網羅、bot検知を回避。",
+    f2_t:"自動化 API",f2_d:"起動時にデバッグポートを割当て、CDP WebSocket を返却。",
+    f3_t:"プロキシプール",f3_d:"一括取込・疎通確認・言語/タイムゾーンの自動同期。",
+    f4_t:"MCP 連携",f4_d:"内蔵 MCP で AI が環境を直接操作。",
+    f5_t:"ローカル暗号化",f5_d:"認証情報・Cookie を AES-256 で暗号化保存。",
+    f6_t:"クロスプラットフォーム",f6_d:"Windows デスクトップ + Linux サーバー。",
+    hl_title:"サーバー向けヘッドレス",
+    hl_sub:"ディスプレイ無しの Ubuntu で HTTP/MCP から駆動。",
+    hl_p1:"GUI 不要、単一バイナリで動作",
+    hl_p2:"API はループバックのみ・token 認証",
+    hl_p3:"Xvfb でヘッド有も可能",
+    dl_title:"ダウンロード",dl_sub:"永久無料。共有またはグループ参加で解除。",
+    dl_unlock_hint:"🔒 共有かグループ参加で全ダウンロード解除（永久無料）",
+    dl_share:"共有して解除",dl_join:"グループに参加",dl_locked:"共有/参加で解除",
+    dl_win_t:"Windows",dl_win_d:"デスクトップ版 + ヘッドレス exe。",
+    dl_linux_t:"Linux",dl_linux_d:"ヘッドレス（x86_64）。CloakBrowser カーネル必要。",
+    dl_mcp_t:"MCP + ドキュメント",dl_mcp_d:"MCP サーバー + AI 連携ガイド。",
+    tag_gui:"ヘッド有",tag_headless:"ヘッドレス",tag_mcp:"AI",
+    footer_note:"オープンソース指紋ブラウザ · CloakBrowser 採用",
+  },
+  ko:{name:"한국어",
+    nav_features:"기능",nav_headless:"헤드리스",nav_download:"다운로드",nav_github:"GitHub",
+    hero_badge:"오픈소스 · 영구 무료",
+    hero_title:"오픈소스 지문 브라우저",
+    hero_sub:"소스 레벨 지문 패치, 환경 격리, 자동화 API 및 MCP 내장. Windows / Linux, 헤드/헤드리스 지원.",
+    hero_download:"다운로드",hero_github:"소스 보기",
+    stat_forms:"형태",stat_langs:"UI 언어",stat_mcp:"AI 지원",stat_free:"무료",
+    feat_title:"핵심 기능",feat_sub:"계정 운영·수집·자동화를 위해.",
+    f1_t:"지문 격리",f1_d:"Canvas/WebGL/오디오/폰트/WebRTC 전반, 봇 탐지 우회.",
+    f2_t:"자동화 API",f2_d:"실행 시 디버그 포트 할당, CDP WebSocket 반환.",
+    f3_t:"프록시 풀",f3_d:"일괄 가져오기·연결 확인·언어/시간대 자동 동기화.",
+    f4_t:"MCP 연동",f4_d:"내장 MCP로 AI가 환경을 직접 제어.",
+    f5_t:"로컬 암호화",f5_d:"자격증명·쿠키를 AES-256으로 암호화 저장.",
+    f6_t:"크로스 플랫폼",f6_d:"Windows 데스크톱 + Linux 서버.",
+    hl_title:"서버용 헤드리스",
+    hl_sub:"디스플레이 없는 Ubuntu에서 HTTP/MCP로 구동.",
+    hl_p1:"GUI 불필요, 단일 바이너리",
+    hl_p2:"API는 루프백만·token 인증",
+    hl_p3:"Xvfb로 헤드 모드도 가능",
+    dl_title:"다운로드",dl_sub:"영구 무료. 공유 또는 그룹 참여로 잠금 해제.",
+    dl_unlock_hint:"🔒 공유 또는 그룹 참여로 전체 다운로드 해제 (영구 무료)",
+    dl_share:"공유로 해제",dl_join:"그룹 참여",dl_locked:"공유/참여로 해제",
+    dl_win_t:"Windows",dl_win_d:"데스크톱 + 헤드리스 exe.",
+    dl_linux_t:"Linux",dl_linux_d:"헤드리스(x86_64). CloakBrowser 커널 필요.",
+    dl_mcp_t:"MCP + 문서",dl_mcp_d:"MCP 서버 + AI 연동 가이드.",
+    tag_gui:"헤드",tag_headless:"헤드리스",tag_mcp:"AI",
+    footer_note:"오픈소스 지문 브라우저 · CloakBrowser 기반",
+  },
+  ru:{name:"Русский",
+    nav_features:"Функции",nav_headless:"Headless",nav_download:"Скачать",nav_github:"GitHub",
+    hero_badge:"Открытый код · Навсегда бесплатно",
+    hero_title:"Антидетект-браузер с открытым кодом",
+    hero_sub:"Патчи отпечатка на уровне кода, изоляция профилей, встроенный API автоматизации и MCP. Windows / Linux.",
+    hero_download:"Скачать",hero_github:"Исходники",
+    stat_forms:"формы",stat_langs:"языки UI",stat_mcp:"для AI",stat_free:"бесплатно",
+    feat_title:"Возможности",feat_sub:"Для матриц аккаунтов, парсинга и автоматизации.",
+    f1_t:"Изоляция отпечатка",f1_d:"Canvas/WebGL/Audio/шрифты/WebRTC — обходит антибот.",
+    f2_t:"API автоматизации",f2_d:"Порт отладки и CDP WebSocket при запуске.",
+    f3_t:"Пул прокси + GeoIP",f3_d:"Импорт, проверка, авто-синхронизация языка/таймзоны.",
+    f4_t:"Нативный MCP",f4_d:"Встроенный MCP — AI управляет средами напрямую.",
+    f5_t:"Шифрование",f5_d:"Пароли и cookie шифруются AES-256.",
+    f6_t:"Кроссплатформенность",f6_d:"Десктоп Windows + сервер Linux.",
+    hl_title:"Headless для серверов",
+    hl_sub:"Запуск на Ubuntu без дисплея, управление по HTTP/MCP.",
+    hl_p1:"Без GUI — один бинарник",
+    hl_p2:"API только loopback, защита токеном",
+    hl_p3:"Headed-режим через Xvfb",
+    dl_title:"Скачать",dl_sub:"Навсегда бесплатно. Поделитесь или вступите в группу.",
+    dl_unlock_hint:"🔒 Поделитесь или вступите в группу, чтобы открыть загрузки",
+    dl_share:"Поделиться",dl_join:"В группу",dl_locked:"поделитесь, чтобы открыть",
+    dl_win_t:"Windows",dl_win_d:"Десктоп + headless exe.",
+    dl_linux_t:"Linux",dl_linux_d:"Headless (x86_64). Нужно ядро CloakBrowser.",
+    dl_mcp_t:"MCP + Документы",dl_mcp_d:"MCP-сервер + гайд для AI.",
+    tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"AI",
+    footer_note:"Антидетект-браузер с открытым кодом · на базе CloakBrowser",
+  },
+  es:{name:"Español",
+    nav_features:"Funciones",nav_headless:"Headless",nav_download:"Descargar",nav_github:"GitHub",
+    hero_badge:"Código abierto · Gratis para siempre",
+    hero_title:"Navegador antidetección de código abierto",
+    hero_sub:"Parches de huella a nivel de código, perfiles aislados, API de automatización y MCP integrados. Windows / Linux.",
+    hero_download:"Descargar",hero_github:"Ver código",
+    stat_forms:"formas",stat_langs:"idiomas",stat_mcp:"para IA",stat_free:"gratis",
+    feat_title:"Funciones clave",feat_sub:"Para matrices de cuentas, scraping y automatización.",
+    f1_t:"Aislamiento de huella",f1_d:"Canvas/WebGL/Audio/Fuentes/WebRTC — supera la detección de bots.",
+    f2_t:"API de automatización",f2_d:"Puerto de depuración y CDP WebSocket al iniciar.",
+    f3_t:"Pool de proxies + GeoIP",f3_d:"Importación masiva, chequeo y auto-sync de idioma/zona.",
+    f4_t:"MCP nativo",f4_d:"Servidor MCP integrado: la IA controla los entornos.",
+    f5_t:"Cifrado local",f5_d:"Contraseñas y cookies cifradas con AES-256.",
+    f6_t:"Multiplataforma",f6_d:"Escritorio Windows + servidor Linux.",
+    hl_title:"Headless, para servidores",
+    hl_sub:"Ejecuta en Ubuntu sin pantalla, por HTTP/MCP.",
+    hl_p1:"Sin GUI — un solo binario",
+    hl_p2:"API solo loopback, con token",
+    hl_p3:"Modo headed vía Xvfb",
+    dl_title:"Descargar",dl_sub:"Gratis para siempre. Comparte o únete al grupo para desbloquear.",
+    dl_unlock_hint:"🔒 Comparte o únete al grupo para desbloquear las descargas",
+    dl_share:"Compartir",dl_join:"Unirse al grupo",dl_locked:"comparte para desbloquear",
+    dl_win_t:"Windows",dl_win_d:"Escritorio + exe headless.",
+    dl_linux_t:"Linux",dl_linux_d:"Headless (x86_64). Requiere kernel CloakBrowser.",
+    dl_mcp_t:"MCP + Docs",dl_mcp_d:"Servidor MCP + guía para IA.",
+    tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"IA",
+    footer_note:"Navegador antidetección de código abierto · con CloakBrowser",
+  },
+  fr:{name:"Français",
+    nav_features:"Fonctions",nav_headless:"Headless",nav_download:"Télécharger",nav_github:"GitHub",
+    hero_badge:"Open source · Gratuit à vie",
+    hero_title:"Navigateur anti-détection open source",
+    hero_sub:"Patchs d'empreinte au niveau du code, profils isolés, API d'automatisation et MCP intégrés. Windows / Linux.",
+    hero_download:"Télécharger",hero_github:"Voir le code",
+    stat_forms:"formes",stat_langs:"langues",stat_mcp:"pour IA",stat_free:"gratuit",
+    feat_title:"Fonctions clés",feat_sub:"Pour les matrices de comptes, le scraping et l'automatisation.",
+    f1_t:"Isolation d'empreinte",f1_d:"Canvas/WebGL/Audio/Polices/WebRTC — passe la détection de bots.",
+    f2_t:"API d'automatisation",f2_d:"Port de débogage et WebSocket CDP au lancement.",
+    f3_t:"Pool de proxies + GeoIP",f3_d:"Import en masse, contrôle, sync auto langue/fuseau.",
+    f4_t:"MCP natif",f4_d:"Serveur MCP intégré : l'IA pilote les environnements.",
+    f5_t:"Chiffrement local",f5_d:"Mots de passe et cookies chiffrés en AES-256.",
+    f6_t:"Multiplateforme",f6_d:"Bureau Windows + serveur Linux.",
+    hl_title:"Headless, pensé pour les serveurs",
+    hl_sub:"Tourne sur Ubuntu sans écran, piloté par HTTP/MCP.",
+    hl_p1:"Sans GUI — un seul binaire",
+    hl_p2:"API en loopback, protégée par token",
+    hl_p3:"Mode headed via Xvfb",
+    dl_title:"Télécharger",dl_sub:"Gratuit à vie. Partagez ou rejoignez le groupe pour débloquer.",
+    dl_unlock_hint:"🔒 Partagez ou rejoignez le groupe pour débloquer les téléchargements",
+    dl_share:"Partager",dl_join:"Rejoindre le groupe",dl_locked:"partagez pour débloquer",
+    dl_win_t:"Windows",dl_win_d:"Bureau + exe headless.",
+    dl_linux_t:"Linux",dl_linux_d:"Headless (x86_64). Noyau CloakBrowser requis.",
+    dl_mcp_t:"MCP + Docs",dl_mcp_d:"Serveur MCP + guide IA.",
+    tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"IA",
+    footer_note:"Navigateur anti-détection open source · propulsé par CloakBrowser",
+  },
+  de:{name:"Deutsch",
+    nav_features:"Funktionen",nav_headless:"Headless",nav_download:"Download",nav_github:"GitHub",
+    hero_badge:"Open Source · Für immer kostenlos",
+    hero_title:"Open-Source Antidetect-Browser",
+    hero_sub:"Fingerprint-Patches auf Quellcode-Ebene, isolierte Profile, integrierte Automatisierungs-API und MCP. Windows / Linux.",
+    hero_download:"Download",hero_github:"Quellcode",
+    stat_forms:"Formen",stat_langs:"Sprachen",stat_mcp:"für KI",stat_free:"kostenlos",
+    feat_title:"Kernfunktionen",feat_sub:"Für Account-Matrizen, Scraping und Automatisierung.",
+    f1_t:"Fingerprint-Isolierung",f1_d:"Canvas/WebGL/Audio/Fonts/WebRTC — umgeht Bot-Erkennung.",
+    f2_t:"Automatisierungs-API",f2_d:"Debug-Port und CDP-WebSocket beim Start.",
+    f3_t:"Proxy-Pool + GeoIP",f3_d:"Massenimport, Prüfung, Auto-Sync von Sprache/Zeitzone.",
+    f4_t:"MCP nativ",f4_d:"Integrierter MCP-Server: KI steuert Umgebungen direkt.",
+    f5_t:"Lokale Verschlüsselung",f5_d:"Passwörter und Cookies mit AES-256 verschlüsselt.",
+    f6_t:"Plattformübergreifend",f6_d:"Windows-Desktop + Linux-Server.",
+    hl_title:"Headless, für Server gebaut",
+    hl_sub:"Läuft auf Ubuntu ohne Display, gesteuert über HTTP/MCP.",
+    hl_p1:"Keine GUI — eine einzelne Binärdatei",
+    hl_p2:"API nur Loopback, token-geschützt",
+    hl_p3:"Headed-Modus per Xvfb",
+    dl_title:"Download",dl_sub:"Für immer kostenlos. Teilen oder Gruppe beitreten zum Freischalten.",
+    dl_unlock_hint:"🔒 Teilen oder Gruppe beitreten, um alle Downloads freizuschalten",
+    dl_share:"Teilen",dl_join:"Gruppe beitreten",dl_locked:"zum Freischalten teilen",
+    dl_win_t:"Windows",dl_win_d:"Desktop + Headless-exe.",
+    dl_linux_t:"Linux",dl_linux_d:"Headless (x86_64). CloakBrowser-Kernel nötig.",
+    dl_mcp_t:"MCP + Docs",dl_mcp_d:"MCP-Server + KI-Leitfaden.",
+    tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"KI",
+    footer_note:"Open-Source Antidetect-Browser · mit CloakBrowser",
+  },
+};
+
+/* Real download targets — replace with your GitHub Releases URLs. */
+const DOWNLOADS = {
+  "win-setup":"https://github.com/CloakHQ/CloakBrowser/releases",
+  "win-headless":"https://github.com/CloakHQ/CloakBrowser/releases",
+  "linux-headless":"https://github.com/CloakHQ/CloakBrowser/releases",
+  "mcp":"https://github.com/CloakHQ/CloakBrowser",
+  "guide":"https://github.com/CloakHQ/CloakBrowser",
+};
+
+const sel = document.getElementById("lang");
+Object.keys(I18N).forEach(code=>{
+  const o=document.createElement("option"); o.value=code; o.textContent=I18N[code].name; sel.appendChild(o);
+});
+
+function apply(lang){
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(dict[k] !== undefined) el.textContent = dict[k];
+    else if(I18N.en[k] !== undefined) el.textContent = I18N.en[k]; // fallback
+  });
+  localStorage.setItem("cloak_site_lang", lang);
+  sel.value = lang;
+}
+
+const saved = localStorage.getItem("cloak_site_lang");
+const initial = saved || (navigator.language||"en").slice(0,2);
+apply(I18N[initial] ? initial : "en");
+sel.addEventListener("change", e=>apply(e.target.value));
+
+/* unlock + downloads */
+function unlock(){
+  document.querySelectorAll(".dl-card").forEach(c=>c.classList.remove("locked"));
+  document.getElementById("unlockBox").classList.add("hide");
+  localStorage.setItem("cloak_unlocked","1");
+}
+if(localStorage.getItem("cloak_unlocked")==="1") unlock();
+
+document.getElementById("shareBtn").addEventListener("click", async ()=>{
+  const data={title:"Abencat Browser 阿笨猫指纹浏览器", text:"开源指纹浏览器 / Open-source fingerprint browser", url:location.href};
+  try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); alert("Link copied — share it to unlock!"); } }
+  catch(e){}
+  unlock();
+});
+document.getElementById("joinBtn").addEventListener("click", ()=>{ setTimeout(unlock, 300); });
+
+document.querySelectorAll("[data-dl]").forEach(a=>{
+  a.addEventListener("click", e=>{
+    const key=a.getAttribute("data-dl"); const url=DOWNLOADS[key];
+    if(url){ e.preventDefault(); window.open(url,"_blank"); }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# Build output
+/dist/
+/out/
+**/target/
+node_modules/
+
+# Tauri generated
+/src-tauri/gen/schemas/
+
+# Fingerprint kernel (downloaded via scripts/download-browser.*, NOT committed)
+cloakbrowser-windows-x64/
+cloakbrowser-linux-x64/
+cloakbrowser-macos/
+*.tar.gz
+cloakbrowser-windows-x64.zip
+
+# Runtime data & secrets (never commit)
+controller-data/
+**/user-data/
+.cloak_key
+.install_id
+master.json
+automation.json
+
+# Logs
+*.log
+vite*.log
+tauri-build.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+website/_check.js

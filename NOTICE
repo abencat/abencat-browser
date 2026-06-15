@@ -1,0 +1,28 @@
+Abencat Browser (阿笨猫指纹浏览器)
+=================================
+
+This software is an open-source controller / launcher for a fingerprint browser.
+
+Fingerprint kernel attribution
+------------------------------
+The actual anti-detection browser engine is **CloakBrowser**, © CloakHQ:
+
+    https://github.com/CloakHQ/CloakBrowser
+
+CloakBrowser is a stealth Chromium build with source-level fingerprint patches
+(Canvas / WebGL / Audio / Fonts / WebRTC, etc.). Abencat Browser launches this
+kernel with `--fingerprint-*` flags and provides profile management, a local
+automation API, an MCP server, a proxy pool, encryption and a UI.
+
+The CloakBrowser kernel is **NOT** redistributed in this repository. It is
+downloaded from the official CloakBrowser releases at setup time via
+`scripts/download-browser.{sh,ps1}`. All rights to the browser engine belong to
+CloakHQ and are governed by CloakBrowser's own license/terms.
+
+Third-party components
+----------------------
+- Tauri, React, and the Rust/Node crates listed in Cargo.toml / package.json,
+  each under their respective licenses.
+
+If you are the maintainer of CloakBrowser and would like the attribution or
+distribution method adjusted, please open an issue.

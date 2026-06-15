@@ -1,0 +1,16 @@
+{
+  "name": "cloak-fingerprint-mcp",
+  "version": "1.0.0",
+  "description": "MCP server exposing the Cloak fingerprint browser automation API as tools for AI agents.",
+  "type": "module",
+  "bin": {
+    "cloak-fingerprint-mcp": "./cloak-mcp.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node cloak-mcp.mjs"
+  },
+  "license": "MIT"
+}
