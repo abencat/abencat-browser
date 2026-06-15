@@ -1,0 +1,48 @@
+name: 🐛 Bug report
+description: Report a problem with Abencat Browser
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for the report! Please **redact any proxies, tokens or passwords**."
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "e.g. v0.1.0 (full bundle / controller / headless)"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS / mode
+      options:
+        - Windows — desktop (GUI)
+        - Windows — headless
+        - Linux — headless
+        - Linux — desktop (GUI)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (redact secrets)
+      description: "Headless: `journalctl -u cloak-headless`. Desktop: console output."
+      render: shell

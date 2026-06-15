@@ -33,3 +33,5 @@ Thumbs.db
 .vscode/
 .idea/
 website/_check.js
+release-assets/
+promo/

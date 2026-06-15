@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🌐 Website & downloads
+    url: https://browser.abencat.com
+    about: Downloads (full bundle / controller) and overview.
+  - name: 🤖 AI automation guide
+    url: https://github.com/abencat/abencat-browser/blob/main/AGENT_AUTOMATION.md
+    about: HTTP API + MCP integration for Puppeteer/Playwright/Selenium.

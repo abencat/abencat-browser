@@ -1,0 +1,57 @@
+name: Release
+
+# Build the controller binaries on tag push and attach them to the GitHub Release.
+# (The ~200 MB "full" bundles with the browser kernel are hosted on browser.abencat.com,
+#  not built here — see scripts/download-browser.* and FEATURES.md.)
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: npm ci
+      - name: Build desktop app + headless (Tauri)
+        run: npm run tauri:build
+      - name: Stage assets
+        shell: bash
+        run: |
+          mkdir -p dist-assets
+          VER="${GITHUB_REF_NAME#v}"
+          cp src-tauri/target/release/bundle/nsis/*-setup.exe "dist-assets/AbencatBrowser-${VER}-x64-setup.exe"
+          cp "src-tauri/target/release/cloak-fingerprint-controller.exe" "dist-assets/AbencatBrowser-${VER}-portable.exe"
+          cp src-tauri/target/release/cloak-headless.exe "dist-assets/abencat-headless-windows-x64.exe"
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist-assets/*
+
+  linux-headless:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - name: Build headless (no GUI / webkit)
+        run: |
+          cd src-tauri
+          cargo build --release --bin cloak-headless --no-default-features
+          cp target/release/cloak-headless "${GITHUB_WORKSPACE}/abencat-headless-linux-x64"
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: abencat-headless-linux-x64
