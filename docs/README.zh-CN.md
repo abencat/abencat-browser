@@ -31,12 +31,23 @@ Windows / Linux、有头与无头。永久免费。
 
 ## 📦 下载
 
-预编译产物见 [Releases](../../../releases) 或 [b.abencat.com](https://b.abencat.com)。
+全部下载托管在 **[b.abencat.com](https://b.abencat.com)**(GitHub Release 仅含源码归档)。
 
-| | 有头(GUI) | 无头(服务器) |
+**完整版 — 含浏览器内核,解压即用(无需再下载):**
+
+| 平台 | 下载 |
+|---|---|
+| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://b.abencat.com/downloads/abencat-windows-x64-full.zip)(225MB)— 解压双击 `Abencat Browser.exe` |
+| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://b.abencat.com/downloads/abencat-linux-x64-full.tar.gz)(210MB)— 解压运行 `./cloak-headless` |
+
+**控制器版 — 体积小,首次运行自动下载内核:**
+
+| 平台 | 有头(GUI) | 无头(服务器) |
 |---|---|---|
-| Windows | `Abencat Browser_*_x64-setup.exe` | `cloak-headless.exe` |
-| Linux x86_64 | 桌面版(需 webkit2gtk)/ `xvfb-run` | `cloak-headless` |
+| Windows | [安装包](https://b.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe)(5MB) | [cloak-headless.exe](https://b.abencat.com/downloads/abencat-headless-windows-x64.exe) |
+| Linux x86_64 | 桌面版(需 webkit2gtk)/ `xvfb-run` | [cloak-headless](https://b.abencat.com/downloads/abencat-headless-linux-x64) |
+
+> 仅指纹内核:[Windows zip](https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
 
 ## 🚀 快速开始
 

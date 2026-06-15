@@ -33,12 +33,24 @@ automation HTTP API + MCP server, Windows / Linux, headed & headless. Free forev
 
 ## 📦 Download
 
-Prebuilt binaries: see [Releases](../../releases) or [b.abencat.com](https://b.abencat.com).
+All downloads are hosted on **[b.abencat.com](https://b.abencat.com)** (the GitHub
+Release carries source archives only).
 
-| | Headed (GUI) | Headless (server) |
+**Full bundle — includes the browser kernel, ready to run (no extra download):**
+
+| Platform | Download |
+|---|---|
+| 🪟 Windows x64 | [abencat-windows-x64-full.zip](https://b.abencat.com/downloads/abencat-windows-x64-full.zip) (225 MB) — unzip & run `Abencat Browser.exe` |
+| 🐧 Linux x86_64 | [abencat-linux-x64-full.tar.gz](https://b.abencat.com/downloads/abencat-linux-x64-full.tar.gz) (210 MB) — extract & run `./cloak-headless` |
+
+**Controller only — tiny, auto-downloads the kernel on first run:**
+
+| Platform | Headed (GUI) | Headless (server) |
 |---|---|---|
-| Windows | `Abencat Browser_*_x64-setup.exe` | `cloak-headless.exe` |
-| Linux x86_64 | desktop build (needs webkit2gtk) / `xvfb-run` | `cloak-headless` |
+| Windows | [installer](https://b.abencat.com/downloads/AbencatBrowser-0.1.0-x64-setup.exe) (5 MB) | [cloak-headless.exe](https://b.abencat.com/downloads/abencat-headless-windows-x64.exe) |
+| Linux x86_64 | desktop build (needs webkit2gtk) / `xvfb-run` | [cloak-headless](https://b.abencat.com/downloads/abencat-headless-linux-x64) |
+
+> Fingerprint kernel (standalone): [Windows zip](https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip) · [Linux tar.gz](https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz)
 
 ## 🚀 Quick start
 
