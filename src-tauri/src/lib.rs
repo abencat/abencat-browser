@@ -94,7 +94,7 @@ pub fn headless_main() {
         Some(port) => {
             let token = runtime.api_token.lock().unwrap().clone();
             let settings = store::load_settings();
-            println!("Cloak headless automation API ready");
+            println!("Abencat Browser — headless automation API ready");
             println!("  endpoint : http://127.0.0.1:{port}");
             println!("  token    : {token}");
             println!("  browser  : {}", settings.browser_path);

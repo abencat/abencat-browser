@@ -98,7 +98,7 @@
       <a href="#features" data-i18n="nav_features"></a>
       <a href="#headless" data-i18n="nav_headless"></a>
       <a href="#download" data-i18n="nav_download"></a>
-      <a href="https://github.com/CloakHQ/CloakBrowser" target="_blank" data-i18n="nav_github"></a>
+      <a href="https://github.com/abencat/abencat-browser" target="_blank" data-i18n="nav_github"></a>
     </div>
     <div class="spacer"></div>
     <select class="lang-select" id="lang" aria-label="language"></select>
@@ -112,7 +112,7 @@
     <p data-i18n="hero_sub"></p>
     <div class="cta">
       <a class="btn primary" href="#download" data-i18n="hero_download"></a>
-      <a class="btn" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" data-i18n="hero_github"></a>
+      <a class="btn" href="https://github.com/abencat/abencat-browser" target="_blank" data-i18n="hero_github"></a>
     </div>
     <div class="stats">
       <div class="stat"><b>2×2</b><span data-i18n="stat_forms"></span></div>
@@ -456,14 +456,18 @@ const I18N = {
   },
 };
 
-/* Real download targets — replace with your GitHub Releases URLs. */
+/* Download targets → GitHub Release assets (abencat/abencat-browser v0.1.0). */
+const REL = "https://github.com/abencat/abencat-browser/releases/download/v0.1.0";
+const REPO = "https://github.com/abencat/abencat-browser";
 const DOWNLOADS = {
-  "win-setup":"https://github.com/CloakHQ/CloakBrowser/releases",
-  "win-headless":"https://github.com/CloakHQ/CloakBrowser/releases",
-  "linux-headless":"https://github.com/CloakHQ/CloakBrowser/releases",
-  "mcp":"https://github.com/CloakHQ/CloakBrowser",
-  "guide":"https://github.com/CloakHQ/CloakBrowser",
+  "win-setup": REL + "/AbencatBrowser-0.1.0-x64-setup.exe",
+  "win-headless": REL + "/abencat-headless-windows-x64.exe",
+  "linux-headless": REL + "/abencat-headless-linux-x64",
+  "mcp": REPO + "/tree/main/mcp",
+  "guide": REPO + "/blob/main/AGENT_AUTOMATION.md",
 };
+// Fallback: if a direct asset 404s (not yet uploaded), open the releases page.
+const RELEASES_PAGE = REPO + "/releases/latest";
 
 const sel = document.getElementById("lang");
 Object.keys(I18N).forEach(code=>{
