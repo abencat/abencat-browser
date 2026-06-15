@@ -10,6 +10,12 @@ automation HTTP API + MCP server, Windows / Linux, headed & headless. Free forev
 [한국어](docs/README.ko.md) · [Русский](docs/README.ru.md) · [Español](docs/README.es.md) ·
 [Français](docs/README.fr.md) · [Deutsch](docs/README.de.md)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/abencat/abencat-browser)](https://github.com/abencat/abencat-browser/releases)
+[![Stars](https://img.shields.io/github/stars/abencat/abencat-browser?style=social)](https://github.com/abencat/abencat-browser/stargazers)
+[![Website](https://img.shields.io/badge/website-browser.abencat.com-6d8bff)](https://browser.abencat.com)
+[![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-success)](https://browser.abencat.com)
+
 </div>
 
 ---

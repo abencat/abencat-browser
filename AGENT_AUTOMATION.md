@@ -1,4 +1,4 @@
-# Cloak 指纹浏览器 — AI 自动化对接指南
+# Abencat 指纹浏览器 — AI 自动化对接指南
 
 本文件面向 **AI/Agent**:读完即可生成「创建指纹环境 → 启动浏览器 → 连接 → 自动化操作 → 关闭」的可运行代码。两种驱动方式:**MCP 工具**(让 AI 直接调用)或 **HTTP API**(生成脚本)。底层指纹内核为 [CloakBrowser](https://github.com/CloakHQ/CloakBrowser)(源码级指纹补丁,过 bot 检测)。
 
@@ -23,7 +23,7 @@ list_profiles → (没有合适的就 create_profile) → start_browser(id) →
 
 | 平台 | 有头(带界面) | 无头(服务器) |
 |---|---|---|
-| **Windows** | 桌面版安装包 `…\target\release\bundle\nsis\Cloak Fingerprint Controller_*_x64-setup.exe`;或 `cloak-fingerprint-controller.exe` | `cloak-headless.exe`(`…\target\release\cloak-headless.exe`) |
+| **Windows** | 安装包 `Abencat Browser_*_x64-setup.exe`;或便携版 `Abencat Browser.exe`(均见 [browser.abencat.com](https://browser.abencat.com)) | `cloak-headless.exe` |
 | **Linux/Ubuntu** | 桌面版(需 webkit2gtk,见 `LINUX_HEADLESS.md`);或服务器上用 **Xvfb** 跑有头(见 §6) | `cloak-headless`(`cargo build --release --bin cloak-headless --no-default-features`) |
 
 无论哪种形态,都会在 `127.0.0.1:50327` 暴露**同一套自动化 HTTP API**,并可被 MCP 服务器包装。
@@ -196,7 +196,7 @@ xvfb-run -a /usr/local/bin/cloak-headless
 ## 7. 注意事项
 
 - **Token**:每次服务重启会重新生成;脚本/MCP 配置需同步更新。
-- **试用额度**:未激活授权时最多 10 个环境,`create_profile` 超额返回错误;激活后解除(见 `COMMERCIAL_FEATURES.md`)。
+- **开源免费**:无 License/试用/数量限制,环境数量不受限。
 - **代理/时区**:环境可绑定代理,启动时按代理自动回填出口 IP / 国家(GeoIP),Linux 同样生效。
 - **远程暴露**:服务仅监听 `127.0.0.1`,跨机请用 SSH 隧道或反向代理 + 鉴权,勿裸暴露端口。
 - **浏览器路径**:设 `CLOAKBROWSER_BINARY_PATH` 指向 CloakBrowser 的 `chrome`;或放在 `cloakbrowser-<os>-x64/` 约定目录由程序自动探测。

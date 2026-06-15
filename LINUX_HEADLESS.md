@@ -49,7 +49,7 @@ Cloak headless automation API ready
 | --- | --- |
 | `GET /api/v1/status` | 状态（含 `headless: true`） |
 | `GET /api/v1/profiles` | 列出环境 |
-| `GET /api/v1/profile/create?name=&projectId=&token=` | 新建环境（受试用额度约束）→ 返回 id |
+| `GET /api/v1/profile/create?name=&projectId=&token=` | 新建环境 → 返回 id |
 | `GET /api/v1/profile/delete?id=&token=` | 删除环境 |
 | `GET /api/v1/browser/start?id=&url=&token=` | 启动（headless），返回 ws / debugPort |
 | `GET /api/v1/browser/stop?id=&token=` | 关闭 |
