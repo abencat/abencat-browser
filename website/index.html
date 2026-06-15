@@ -185,9 +185,10 @@ puppeteer.connect({ browserWSEndpoint: ws })</pre>
         <div><span class="tag" data-i18n="tag_gui"></span><span class="tag hl" data-i18n="tag_headless"></span></div>
         <p style="color:var(--muted);font-size:14px" data-i18n="dl_win_d"></p>
         <div class="dl-list">
-          <a class="btn primary" href="#" data-dl="win-setup">⬇ Installer (.exe)</a>
+          <a class="btn primary" href="https://b.abencat.com/downloads/abencat-windows-x64-full.zip">⬇ <span data-i18n="dl_full"></span> · 含浏览器 (225MB)</a>
+          <a class="btn" href="#" data-dl="win-setup">⬇ <span data-i18n="dl_ctrl"></span> · 安装包 (5MB)</a>
           <a class="btn" href="#" data-dl="win-headless">⬇ cloak-headless.exe</a>
-          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip">⬇ 指纹内核 Kernel (536MB)</a>
+          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-windows-x64.zip">⬇ <span data-i18n="dl_kernel_only"></span> (536MB)</a>
         </div>
         <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
       </div>
@@ -198,8 +199,9 @@ puppeteer.connect({ browserWSEndpoint: ws })</pre>
         <div><span class="tag hl" data-i18n="tag_headless"></span></div>
         <p style="color:var(--muted);font-size:14px" data-i18n="dl_linux_d"></p>
         <div class="dl-list">
-          <a class="btn primary" href="#" data-dl="linux-headless">⬇ cloak-headless (x86_64)</a>
-          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz">⬇ 指纹内核 Kernel (207MB)</a>
+          <a class="btn primary" href="https://b.abencat.com/downloads/abencat-linux-x64-full.tar.gz">⬇ <span data-i18n="dl_full"></span> · 含浏览器 (210MB)</a>
+          <a class="btn" href="#" data-dl="linux-headless">⬇ <span data-i18n="dl_ctrl"></span> · headless (5MB)</a>
+          <a class="btn" href="https://b.abencat.com/downloads/cloakbrowser-linux-x64.tar.gz">⬇ <span data-i18n="dl_kernel_only"></span> (207MB)</a>
         </div>
         <div class="lock-overlay"><div>🔒 <span data-i18n="dl_locked"></span></div></div>
       </div>
@@ -258,7 +260,8 @@ const I18N = {
     dl_linux_t:"Linux",dl_linux_d:"无头服务二进制（x86_64），另需 CloakBrowser 内核。",
     dl_mcp_t:"MCP + 文档",dl_mcp_d:"MCP 服务器 + 给 AI 的自动化对接指南。",
     tag_gui:"有头",tag_headless:"无头",tag_mcp:"AI",
-    dl_kernel_note:"提示：软件/无头服务首次运行会自动下载指纹内核(优先从 b.abencat.com 镜像)。也可下载上方「指纹内核」离线安装。控制器为开源,内核 © CloakHQ。",
+    dl_full:"完整版",dl_ctrl:"控制器",dl_kernel_only:"仅指纹内核",
+    dl_kernel_note:"「完整版·含浏览器」= 控制器 + 指纹内核,解压即用,无需联网下载;「控制器版」体积小,首次运行自动下载内核(优先 b.abencat.com 镜像)。控制器开源,内核 © CloakHQ。",
     footer_note:"开源指纹浏览器控制器 · 基于 CloakBrowser 内核",
   },
   en:{name:"English",
@@ -287,7 +290,8 @@ const I18N = {
     dl_linux_t:"Linux",dl_linux_d:"Headless binary (x86_64). CloakBrowser kernel required.",
     dl_mcp_t:"MCP + Docs",dl_mcp_d:"MCP server + the AI automation guide.",
     tag_gui:"Headed",tag_headless:"Headless",tag_mcp:"AI",
-    dl_kernel_note:"Tip: the app/headless server auto-downloads the fingerprint kernel on first run (mirror: b.abencat.com). Or grab the “Kernel” above for offline install. Controller is open-source; kernel © CloakHQ.",
+    dl_full:"Full",dl_ctrl:"Controller",dl_kernel_only:"Kernel only",
+    dl_kernel_note:"“Full” = controller + fingerprint kernel, ready to run (no download needed). “Controller” is tiny and auto-downloads the kernel on first run (mirror: b.abencat.com). Controller is open-source; kernel © CloakHQ.",
     footer_note:"Open-source fingerprint browser controller · powered by CloakBrowser",
   },
   ja:{name:"日本語",
